@@ -2,17 +2,23 @@ pipeline {
     agent {
         label "jenkins-docker"
     }
+    environment {
+        IMAGE_TAG = "latest"
+    }
 
     stages {
-        stage('build docker image1') {
+        stage('Build docker image') {
             steps {
-                sh 'date'
+                script {
+                    IMAGE_TAG = sh(returnStdout: true, script: 'git log -n1 --format="%h"')
             }
+                sh "docker build --build-arg IMAGE_TAG=${IMAGE_TAG} -t frontend:${IMAGE_TAG} ."
         }
-        stage('build docker image2') {
+        stage('list docker image') {
             steps {
-                sh 'date -u'
+                sh 'docker images'
             }
         }
     }
+}
 }
