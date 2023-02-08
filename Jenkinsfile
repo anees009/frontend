@@ -1,9 +1,3 @@
-node('jenkins-slave') {
-  stage('Checkout and set agent'){
-     checkout scm
-  } 
-}
-
 pipeline {
     agent {
         label "jenkins-docker"
