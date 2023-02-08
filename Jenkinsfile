@@ -4,9 +4,14 @@ pipeline {
     }
 
     stages {
-        stage('build docker image') {
+        stage('build docker image1') {
             steps {
                 sh 'date'
+            }
+        }
+        stage('build docker image2') {
+            steps {
+                sh 'date -u'
             }
         }
     }
