@@ -8,7 +8,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                echo "${env.GIT_BRANCH}"
+                echo "${env.GITHUB_PULL_REQUEST_BRANCH}"
                 // Run build steps only when a merge happens to the dev-branch
                 script {
                     withEnv(["BRANCH_NAME=${env.GIT_BRANCH}"]) {
