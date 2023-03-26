@@ -13,8 +13,6 @@ pipeline {
                 script {
                     withEnv(["BRANCH_NAME=${env.GIT_BRANCH}"]) {
                         if ("${BRANCH_NAME}" == 'origin/dev') {
-                            sh 'date'
-                            sh 'ls'
                             echo "Current branch name: ${BRANCH_NAME}"
                         } else {
                             echo "Skipping build steps as no merge happened to the dev-branch"
@@ -28,8 +26,7 @@ pipeline {
             steps {
                 script {
                     sh "pwd"
-                    sh "ls"
-                    sh "ls/kaniko"
+                    sh "ls /kaniko"
                     sh "/kaniko/executor --dockerfile `pwd`/Dockerfile --context `pwd` --destination=anees_test/frontend-img:25"
                 }
             }
