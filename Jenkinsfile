@@ -32,7 +32,7 @@ pipeline {
         stage('Build docker image') {
             steps {
                 container('builder') {
-                    sh "executor --context `pwd` --dockerfile `pwd`/Dockerfile --destination ${REGISTRY_URL}/${IMAGE_NAME}:${IMAGE_TAG} --dockerconfig ${DOCKER_CONFIG}"
+                    sh "executor --context `pwd` --dockerfile `pwd`/Dockerfile --destination ${REGISTRY_URL}/${IMAGE_NAME}:${IMAGE_TAG}"
                     sh "docker tag ${REGISTRY_URL}/${IMAGE_NAME}:${IMAGE_TAG} ${REGISTRY_URL}/${IMAGE_NAME}:latest"
                     sh "docker push ${REGISTRY_URL}/${IMAGE_NAME}:${IMAGE_TAG}"
                     sh "docker push ${REGISTRY_URL}/${IMAGE_NAME}:latest"
