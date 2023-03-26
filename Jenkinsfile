@@ -9,6 +9,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 // Checkout the repository
+                echo ${env.BRANCH_NAME}
                 checkout([$class: 'GitSCM', 
                           branches: [[name: '*/dev']], 
                           userRemoteConfigs: [[url: 'https://github.com/anees009/frontend.git']]])
