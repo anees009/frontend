@@ -27,6 +27,9 @@ pipeline {
         stage('Build docker image') {
             steps {
                 script {
+                    sh "pwd"
+                    sh "ls"
+                    sh "ls/kaniko"
                     sh "/kaniko/executor --dockerfile `pwd`/Dockerfile --context `pwd` --destination=anees_test/frontend-img:25"
                 }
             }
