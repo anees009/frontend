@@ -30,7 +30,7 @@ pipeline {
                     sh '''
                     /kaniko/executor --dockerfile `pwd`/Dockerfile \
                                      --context `pwd` \
-                                     --destination=anees_test/frontend-img:${env.BUILD_ID}
+                                     --destination=anees_test/frontend-img:25
                        '''
                 }
             }
