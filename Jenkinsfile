@@ -7,7 +7,7 @@ pipeline {
     }
     environment {
         REGISTRY_URL = "us.icr.io" // Update with your IBM Cloud Container Registry URL
-        IMAGE_NAME = "frontend-img"
+        IMAGE_NAME = "anees_test/frontend-img"
         IMAGE_TAG = "25"
         DOCKER_CONFIG = credentials('my-docker-config') // Jenkins credentials with Docker config.json file
         PATH = "$PATH:/busybox:/kaniko/"
