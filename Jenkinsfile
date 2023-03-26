@@ -8,6 +8,11 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
+                // Checkout the repository
+                checkout([$class: 'GitSCM', 
+                          branches: [[name: '*/dev']], 
+                          userRemoteConfigs: [[url: 'https://github.com/anees009/frontend.git']]])
+                
                 // Run build steps only when a merge happens to the dev branch
                 script {
                     if (env.BRANCH_NAME == 'dev' && env.GITHUB_PULL_REQUEST_BRANCH == 'dev') {
