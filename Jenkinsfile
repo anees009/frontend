@@ -1,6 +1,6 @@
 pipeline {
     agent {
-        label 'jenkins-slave'
+        label 'jenkins-kaniko'
     }
     triggers {
         githubPush()
@@ -21,6 +21,17 @@ pipeline {
                             echo "Current branch name: ${BRANCH_NAME} "
                         }
                     }
+                }
+            }
+        }
+        stage('Build docker image') {
+            steps {
+                script {
+                    sh '''
+                    /kaniko/executor --dockerfile `pwd`/Dockerfile \
+                                     --context `pwd` \
+                                     --destination=anees_test/frontend-img:${env.BUILD_ID}
+                       '''
                 }
             }
         }
