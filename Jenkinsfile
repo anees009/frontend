@@ -8,23 +8,17 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                // Checkout the repository
-                echo "${env.GIT_BRANCH}"
-                checkout([$class: 'GitSCM', 
-                          branches: [[name: '*/dev']], 
-                          userRemoteConfigs: [[url: 'https://github.com/anees009/frontend.git']]])
-                echo "${env.GIT_BRANCH}"
-                
+                echo "${env.GIT_BRANCH}"              
                 // Run build steps only when a merge happens to the dev branch
                 script {
-                    withEnv(["BRANCH_NAME=${env.BRANCH_NAME}", "GITHUB_PULL_REQUEST_BRANCH=${env.GITHUB_PULL_REQUEST_BRANCH}"]) {
-                        if ("${BRANCH_NAME}" == 'dev' && "${GITHUB_PULL_REQUEST_BRANCH}" == 'dev') {
+                    withEnv(["BRANCH_NAME=${env.GIT_BRANCH}"]) {
+                        if ("${BRANCH_NAME}" == 'origin/dev' {
                             sh 'date'
                             sh 'ls'
-                            echo "Current branch name: ${BRANCH_NAME} and pull branch: ${GITHUB_PULL_REQUEST_BRANCH}"
+                            echo "Current branch name: ${BRANCH_NAME}"
                         } else {
                             echo "Skipping build steps as no merge happened to the dev branch"
-                            echo "Current branch name: ${BRANCH_NAME} and pull branch: ${GITHUB_PULL_REQUEST_BRANCH}"
+                            echo "Current branch name: ${BRANCH_NAME} "
                         }
                     }
                 }
