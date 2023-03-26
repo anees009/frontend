@@ -8,16 +8,15 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                sh 'echo "Building..." '
-                sh 'sleep 5'
-                sh 'echo "Sleep done"'
-                // Run build steps only when a merge happens to the master branch
+                // Run build steps only when a merge happens to the dev branch
                 script {
                     if (env.BRANCH_NAME == 'dev' && env.GITHUB_PULL_REQUEST_BRANCH == 'dev') {
                         sh 'date'
                         sh 'ls'
+                        echo "Current branch name: ${env.BRANCH_NAME} and pull branch: ${env.GITHUB_PULL_REQUEST_BRANCH}"
                     } else {
-                        echo "Skipping build steps as no merge happened to the master branch"
+                        echo "Skipping build steps as no merge happened to the dev branch"
+                        echo "Current branch name: ${env.BRANCH_NAME} and pull branch: ${env.GITHUB_PULL_REQUEST_BRANCH}"
                     }
                 }
                 
