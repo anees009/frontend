@@ -5,6 +5,12 @@ pipeline {
     triggers {
         githubPush()
     }
+    environment {
+        REGISTRY_URL = "us.icr.io" // Update with your IBM Cloud Container Registry URL
+        IMAGE_NAME = "frontend-img:25"
+        IMAGE_TAG = "25"
+        DOCKER_CONFIG = credentials('my-docker-config') // Jenkins credentials with Docker config.json file
+    }
     stages {
         stage('Checkout') {
             steps {
@@ -25,9 +31,10 @@ pipeline {
         stage('Build docker image') {
             steps {
                 script {
-                    sh "pwd"
-                    sh "ls /kaniko"
-                    sh "/kaniko/executor --dockerfile `pwd`/Dockerfile --context `pwd` --destination=anees_test/frontend-img:25"
+                    sh "/kaniko/executor --context `pwd` --dockerfile `pwd`/Dockerfile --destination ${REGISTRY_URL}/${IMAGE_NAME}:${IMAGE_TAG} --dockerconfig ${DOCKER_CONFIG}"
+                    sh "docker tag ${REGISTRY_URL}/${IMAGE_NAME}:${IMAGE_TAG} ${REGISTRY_URL}/${IMAGE_NAME}:latest"
+                    sh "docker push ${REGISTRY_URL}/${IMAGE_NAME}:${IMAGE_TAG}"
+                    sh "docker push ${REGISTRY_URL}/${IMAGE_NAME}:latest"
                 }
             }
         }
