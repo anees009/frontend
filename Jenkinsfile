@@ -15,7 +15,7 @@ pipeline {
                 
                 // Run build steps only when a merge happens to the dev branch
                 script {
-                    withEnv(["BRANCH_NAME=${env.BRANCH_NAME}"]) {
+                    withEnv(["BRANCH_NAME=${env.BRANCH_NAME}", "GITHUB_PULL_REQUEST_BRANCH=${env.GITHUB_PULL_REQUEST_BRANCH}"]) {
                         if (env.BRANCH_NAME == 'dev' && env.GITHUB_PULL_REQUEST_BRANCH == 'dev') {
                             sh 'date'
                             sh 'ls'
