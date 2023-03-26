@@ -16,13 +16,13 @@ pipeline {
                 // Run build steps only when a merge happens to the dev branch
                 script {
                     withEnv(["BRANCH_NAME=${env.BRANCH_NAME}", "GITHUB_PULL_REQUEST_BRANCH=${env.GITHUB_PULL_REQUEST_BRANCH}"]) {
-                        if (${BRANCH_NAME} == 'dev' && ${GITHUB_PULL_REQUEST_BRANCH} == 'dev') {
+                        if ("${BRANCH_NAME}" == 'dev' && "${GITHUB_PULL_REQUEST_BRANCH}" == 'dev') {
                             sh 'date'
                             sh 'ls'
-                            echo "Current branch name: ${env.BRANCH_NAME} and pull branch: ${env.GITHUB_PULL_REQUEST_BRANCH}"
+                            echo "Current branch name: ${BRANCH_NAME} and pull branch: ${GITHUB_PULL_REQUEST_BRANCH}"
                         } else {
                             echo "Skipping build steps as no merge happened to the dev branch"
-                            echo "Current branch name: ${env.BRANCH_NAME} and pull branch: ${env.GITHUB_PULL_REQUEST_BRANCH}"
+                            echo "Current branch name: ${BRANCH_NAME} and pull branch: ${GITHUB_PULL_REQUEST_BRANCH}"
                         }
                     }
                 }
