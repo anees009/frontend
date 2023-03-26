@@ -17,7 +17,7 @@ pipeline {
                             sh 'ls'
                             echo "Current branch name: ${BRANCH_NAME}"
                         } else {
-                            echo "Skipping build steps as no merge happened to the dev branch"
+                            echo "Skipping build steps as no merge happened to the dev-branch"
                             echo "Current branch name: ${BRANCH_NAME} "
                         }
                     }
