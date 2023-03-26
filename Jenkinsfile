@@ -9,7 +9,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 echo "${env.GIT_BRANCH}"
-                // Run build steps only when a merge happens to the dev branch
+                // Run build steps only when a merge happens to the dev-branch
                 script {
                     withEnv(["BRANCH_NAME=${env.GIT_BRANCH}"]) {
                         if ("${BRANCH_NAME}" == 'origin/dev') {
