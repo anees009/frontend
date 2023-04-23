@@ -1,0 +1,39 @@
+- job:
+    name: Simple_Ping_Test
+    description: |-
+      <p>Runs a simple ping test to verify the VPN clients in the Jenkins swarm are up</p>
+      <p>Source: https://github.ibm.com/alchemy-conductors/conductors-jenkins-jobs/blob/master/alchemy-conductors/Conductors/job/Simple_Ping_Test.yml</p>
+    node: dockerbuild-ansible
+    block-downstream: false
+    block-upstream: false
+    builders:
+    - shell: |
+        #!/bin/bash
+        default="\e[39m"
+        green="\e[32m"
+        red="\e[31m"
+        UP="$green UP$default\n"
+        DOWN="$red DOWN$default\n"
+        echo
+        date
+        echo
+        ping -c1 -W3 8.8.8.8 &> /dev/null && echo -en "env=google\t\tstatus=$UP" || {
+        echo -en "env=google\t\tstatus=$DOWN" ; EXIT_CODE="1"
+        }
+        ping -c1 -W3 74.6.231.21 &> /dev/null && echo -en "env=yahoo\tstatus=$UP" || {
+        echo -en "env=yahoo\tstatus=$DOWN"; EXIT_CODE="1"
+        }
+        exit $EXIT_CODE
+    concurrent: false
+    disabled: false
+    jdk: (System)
+    project-type: freestyle
+    publishers: []
+    triggers:
+    - timed: "*/15 * * * *"
+    wrappers:
+    - timeout:
+        timeout: 3
+        type: absolute
+    - ansicolor:
+        colormap: xterm
